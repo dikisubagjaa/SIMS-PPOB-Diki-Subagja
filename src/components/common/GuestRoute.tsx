@@ -6,14 +6,14 @@ interface Props {
   children: ReactNode
 }
 
-const ProtectedRoute = ({ children }: Props) => {
+const GuestRoute = ({ children }: Props) => {
   const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated)
 
-  if (!isAuthenticated) {
-    return <Navigate to="/login" replace />
+  if (isAuthenticated) {
+    return <Navigate to="/dashboard" replace />
   }
 
   return <>{children}</>
 }
 
-export default ProtectedRoute
+export default GuestRoute

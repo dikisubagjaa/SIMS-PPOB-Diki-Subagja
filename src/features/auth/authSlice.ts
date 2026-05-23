@@ -1,7 +1,7 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import axiosInstance from '../../api/axios'
-import type { ApiResponse } from '../../types/api'
-import type { LoginRequest, LoginResponse, RegistrationRequest } from '../../types/auth'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import axiosInstance from '../../api/axios';
+import type { ApiResponse } from '../../types/api';
+import type { LoginRequest, LoginResponse, RegistrationRequest } from '../../types/auth';
 
 export interface AuthState {
   token: string | null
@@ -9,7 +9,6 @@ export interface AuthState {
   loading: boolean
 }
 
-// Check localStorage for existing token on app init
 const storedToken = localStorage.getItem('token')
 
 const initialState: AuthState = {
@@ -19,7 +18,7 @@ const initialState: AuthState = {
 }
 
 export const loginThunk = createAsyncThunk<
-  string, // return type: the token
+  string, 
   LoginRequest,
   { rejectValue: string }
 >('auth/login', async (credentials, { rejectWithValue }) => {
@@ -31,7 +30,6 @@ export const loginThunk = createAsyncThunk<
       return rejectWithValue(message)
     }
 
-    // Store token in localStorage
     localStorage.setItem('token', data.token)
     return data.token
   } catch (error: unknown) {
@@ -46,7 +44,7 @@ export const loginThunk = createAsyncThunk<
 })
 
 export const registerThunk = createAsyncThunk<
-  string, // return type: the success message
+  string, 
   RegistrationRequest,
   { rejectValue: string }
 >('auth/register', async (data, { rejectWithValue }) => {
@@ -81,7 +79,6 @@ const authSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    // Login
     builder.addCase(loginThunk.pending, (state) => {
       state.loading = true
     })
@@ -96,7 +93,6 @@ const authSlice = createSlice({
       state.isAuthenticated = false
     })
 
-    // Register
     builder.addCase(registerThunk.pending, (state) => {
       state.loading = true
     })

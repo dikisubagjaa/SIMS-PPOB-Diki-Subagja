@@ -64,7 +64,6 @@ export default function RegisterPage() {
 
     return (
         <div className="min-h-screen flex">
-            {/* LEFT SIDE */}
             <div className="w-full lg:w-1/2 flex items-center justify-center bg-white px-6">
                 <div className="w-full max-w-md">
                     <div className="flex items-center justify-center gap-3 mb-10">
@@ -86,7 +85,6 @@ export default function RegisterPage() {
                     </div>
 
                     <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
-                        {/* Email */}
                         <div>
                             <div className="relative">
                                 <HiOutlineAtSymbol 
@@ -108,7 +106,6 @@ export default function RegisterPage() {
                             )}
                         </div>
 
-                        {/* First Name */}
                         <div>
                             <div className="relative">
                                 <HiOutlineUser 
@@ -130,7 +127,6 @@ export default function RegisterPage() {
                             )}
                         </div>
 
-                        {/* Last Name */}
                         <div>
                             <div className="relative">
                                 <HiOutlineUser 
@@ -152,7 +148,6 @@ export default function RegisterPage() {
                             )}
                         </div>
 
-                        {/* Password */}
                         <div>
                             <div className="relative">
                                 <HiOutlineLockClosed
@@ -186,7 +181,6 @@ export default function RegisterPage() {
                             )}
                         </div>
 
-                        {/* Confirm Password */}
                         <div>
                             <div className="relative">
                                 <HiOutlineLockClosed
@@ -241,7 +235,6 @@ export default function RegisterPage() {
                 </div>
             </div>
             
-            {/* RIGHT SIDE */}
             <div className="hidden lg:block lg:w-1/2">
                 <img
                     src={loginBanner}

@@ -1,20 +1,20 @@
-import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { useForm } from 'react-hook-form'
-import { yupResolver } from '@hookform/resolvers/yup'
-import * as yup from 'yup'
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 import {
   HiOutlineLockClosed,
   HiOutlineEye,
   HiOutlineEyeOff,
   HiOutlineAtSymbol,
 } from 'react-icons/hi'
-import logo from '../../assets/images/logo.png'
-import loginBanner from '../../assets/images/login-banner.png'
-import { useAppDispatch, useAppSelector } from '../../app/hooks'
-import { loginThunk } from '../../features/auth/authSlice'
-import { useToast } from '../../hooks/useToast'
-import type { LoginRequest } from '../../types/auth'
+import logo from '../../assets/images/logo.png';
+import loginBanner from '../../assets/images/login-banner.png';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { loginThunk } from '../../features/auth/authSlice';
+import { useToast } from '../../hooks/useToast';
+import type { LoginRequest } from '../../types/auth';
 
 interface LoginFormData {
   email: string
