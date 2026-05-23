@@ -1,11 +1,10 @@
-import axios from 'axios'
+import axios from 'axios';
 
 const axiosInstance = axios.create({
-  baseURL: 'https://take-home-test-api.nutech-integrasi.com',
+  baseURL: import.meta.env.VITE_API_BASE_URL,
   headers: { 'Content-Type': 'application/json' },
 })
 
-// Request interceptor: inject JWT Bearer token
 axiosInstance.interceptors.request.use((config) => {
   const token = localStorage.getItem('token')
   if (token) {
@@ -14,7 +13,6 @@ axiosInstance.interceptors.request.use((config) => {
   return config
 })
 
-// Response interceptor: handle 401 Unauthorized
 axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
