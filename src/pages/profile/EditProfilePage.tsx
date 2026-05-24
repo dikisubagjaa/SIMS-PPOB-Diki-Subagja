@@ -10,8 +10,10 @@ import { useToast } from '../../hooks/useToast';
 import defaultAvatar from '../../assets/images/photo-profile.png';
 
 const profileSchema = yup.object({
-    first_name: yup.string().required('Nama depan wajib diisi').max(50, 'Maksimal 50 karakter'),
-    last_name: yup.string().required('Nama belakang wajib diisi').max(50, 'Maksimal 50 karakter'),
+    first_name: yup.string().required('Nama depan wajib diisi').max(50, 'Maksimal 50 karakter')
+        .test('not-whitespace', 'Nama depan wajib diisi', (v) => !!v?.trim()),
+    last_name: yup.string().required('Nama belakang wajib diisi').max(50, 'Maksimal 50 karakter')
+        .test('not-whitespace', 'Nama belakang wajib diisi', (v) => !!v?.trim()),
 })
 
 interface ProfileFormData {
@@ -36,11 +38,17 @@ export default function EditProfilePage() {
         formState: { errors },
     } = useForm<ProfileFormData>({
         resolver: yupResolver(profileSchema) as never,
+        defaultValues: {
+            first_name: profile?.first_name || '',
+            last_name: profile?.last_name || '',
+        },
     })
 
     useEffect(() => {
-        dispatch(fetchProfileThunk())
-    }, [dispatch])
+        if (!profile) {
+            dispatch(fetchProfileThunk())
+        }
+    }, [dispatch, profile])
 
     useEffect(() => {
         if (profile && !initializedRef.current) {
@@ -50,7 +58,10 @@ export default function EditProfilePage() {
     }, [profile, reset])
 
     const onSubmit = async (data: ProfileFormData) => {
-        const result = await dispatch(updateProfileThunk(data))
+        const result = await dispatch(updateProfileThunk({
+            first_name: data.first_name.trim(),
+            last_name: data.last_name.trim(),
+        }))
         if (updateProfileThunk.fulfilled.match(result)) {
             showToast({ type: 'success', message: 'Profil berhasil diperbarui' })
             navigate('/profile')

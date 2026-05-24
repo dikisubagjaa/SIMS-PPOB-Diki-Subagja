@@ -41,17 +41,28 @@ export const fetchProfileThunk = createAsyncThunk<
 export const updateProfileThunk = createAsyncThunk<
   Profile,
   UpdateProfileRequest,
-  { rejectValue: string }
->('profile/update', async (profileData, { rejectWithValue }) => {
+  { rejectValue: string; state: { profile: ProfileState } }
+>('profile/update', async (profileData, { rejectWithValue, getState }) => {
   try {
     const response = await axiosInstance.put<ApiResponse<Profile>>('/profile/update', profileData)
     const { status, message, data } = response.data
 
-    if (status !== 0 || !data) {
+    if (status !== 0) {
       return rejectWithValue(message)
     }
 
-    return data
+    const currentProfile = getState().profile.data
+    const updatedProfile = data || currentProfile
+
+    if (!updatedProfile) {
+      return rejectWithValue(message || 'Gagal memperbarui profil.')
+    }
+
+    return {
+      ...updatedProfile,
+      first_name: profileData.first_name,
+      last_name: profileData.last_name,
+    }
   } catch (error: unknown) {
     if (error && typeof error === 'object' && 'response' in error) {
       const axiosError = error as { response?: { data?: { message?: string } } }

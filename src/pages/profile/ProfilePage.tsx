@@ -12,8 +12,10 @@ export default function ProfilePage() {
     const profile = useAppSelector((state) => state.profile.data)
 
     useEffect(() => {
-        dispatch(fetchProfileThunk())
-    }, [dispatch])
+        if (!profile) {
+            dispatch(fetchProfileThunk())
+        }
+    }, [dispatch, profile])
 
     const handleLogout = () => {
         dispatch(logout())
